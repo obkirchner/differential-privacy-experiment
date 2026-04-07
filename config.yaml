@@ -1,0 +1,78 @@
+seed: 42
+
+data:
+  dataset_name: imdb
+  raw_path: data/raw
+  processed_path: data/processed
+
+  train_size: 2000
+  val_size: 500
+  test_size: 2000
+
+  max_vocab_size: 20000
+  max_seq_len: 300
+
+model:
+  embedding_dim: 100
+  hidden_dim: 256
+  num_layers: 2
+  dropout: 0.3
+  padding_idx: 0
+  freeze_embeddings: false
+
+  glove:
+    path: glove.6B.100d.txt
+
+training:
+  optimizer: sgd
+  learning_rate: 0.5
+  momentum: 0.9
+  weight_decay: 0.0001
+
+  num_epochs: 30
+  batch_size_non_dp: 64
+  batch_size_dp: 64
+
+dp:
+  delta: 0.0005
+  max_grad_norm: 5.0
+
+experiments:
+  - name: baseline
+    dp: false
+    noise_multiplier: 0.0
+    learning_rate: 0.5      # optimal for non-DP SGD
+    momentum: 0.9           # standard momentum for baseline
+
+  - name: dp_0_5
+    dp: true
+    noise_multiplier: 0.5
+    learning_rate: 0.05     # lower LR needed for DP-SGD stability
+    momentum: 0.0           # no momentum for DP (noise accumulates otherwise)
+
+  - name: dp_1_0
+    dp: true
+    noise_multiplier: 1.0
+    learning_rate: 0.05
+    momentum: 0.0
+
+  - name: dp_2_0
+    dp: true
+    noise_multiplier: 2.0
+    learning_rate: 0.05
+    momentum: 0.0
+
+modes:
+  default: full
+
+  full:
+    train_size: 10000
+    val_size: 2000
+    test_size: 2000
+    num_epochs: 15
+
+  debug:
+    train_size: 300
+    val_size: 150
+    test_size: 200
+    num_epochs: 3
