@@ -5,10 +5,10 @@ To let this experiment run as I did, one has to:
 3. Then create a .zip of the project (containing the glove.6B.100d.txt)
 4. Upload this zip as dataset on kaggle.com
 5. Create a new notebook on kaggle.com
-  **In this notebook:**
-6. Enable GPU P100 via Settings > Accelerator
-7. Add the previously created dataset as input (via the right-hand sidebar)
-8. Issue "mv ../input/dataset/*username*/*dataset_name* ."
-9. Issue "cd *into the root of the project*"
-10. Issue "!python -m pip install --no-cache-dir "opacus==1.4.1" --no-deps"
-11. Issue "!python main.py"
+   **In this notebook:**
+7. Enable GPU P100 via Settings > Accelerator
+8. Add the previously created dataset as input (via the right-hand sidebar)
+9. Issue "mv ../input/dataset/*username*/*dataset_name* ."
+10. Issue "cd *into the root of the project*"
+11. Issue "!python -m pip install --no-cache-dir "opacus==1.4.1" --no-deps"
+12. Issue "!python main.py"
